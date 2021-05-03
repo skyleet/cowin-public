@@ -37,7 +37,7 @@ Things you'll need to have before you get this running:
 1. Set your phone number
 1. Set your age
 1. Set whether or not you want Covaxin. (true/false)
-1. On line 7, set the "search" URL. (TODO: How to get this URL?)
+1. On line 7, set the "search" URL. Watch this video to learn how to get this URL: https://youtu.be/a-nJBLbIdTw
 
 ### Node.js
 
