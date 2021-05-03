@@ -56,30 +56,39 @@ function sleep(time) {
 
   await page.type(selectors.otpInput, otp);
 
-  page.on('request', async (interceptedRequest) => {
-    if (
-      interceptedRequest.url().endsWith('/beneficiaries') &&
-      interceptedRequest.method() === 'GET'
-    ) {
-      const headers = interceptedRequest.headers();
+  page.on('response', async (interceptedResponse) => {
+    const request = interceptedResponse.request();
 
-      interceptedRequest.abort();
+    if (
+      request.url().endsWith('/beneficiaries') &&
+      request.method() === 'GET'
+    ) {
+      const headers = request.headers();
 
       const auth = headers['authorization'];
 
-      console.log(auth);
+      // console.log(auth);
+
+      const response = await interceptedResponse.json();
+      // console.log(response);
 
       config.auth = auth;
+
+      const beneficiary = response.beneficiaries.find(
+        (b) => b.name === config.name
+      );
+
+      config.beneficiary_reference_id = beneficiary.beneficiary_reference_id;
+
+      if (beneficiary.appointments.length) {
+        config.appointment_id = beneficiary.appointments[0].appointment_id;
+      }
 
       fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
 
       await browser.close();
-    } else {
-      interceptedRequest.continue();
     }
   });
-
-  await page.setRequestInterception(true);
 
   await Promise.all([
     page.waitForNavigation(),
