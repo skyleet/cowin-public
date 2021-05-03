@@ -56,3 +56,4 @@ Things you'll need to have before you get this running:
 - Keep the terminal running.
 - If the script fails for some reason, you will stop getting OTPs. Re-run `node reschedule` or `node schedule`.
 - You'll get an SMS as soon as your appointment has been scheduled or rescheduled.
+- You'll keep seeing an error every 5 seconds. You can ignore the error.
