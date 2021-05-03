@@ -1,0 +1,15 @@
+{
+  "auth": "Bearer eyJhbGciOiJIUzI1NiIsIergernR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiI2N2VlNzBkMy1hM2EwLTRiZGUtOWJlOS00ODlhMjExMjgzYTQiLCJ1c2VyX2lkIjoiNjdlZTcwZDMtYTNhMC00YmRlLTliZTktNDg5YTIxMTI4M2E0IiwidXNlcl90eXBlIjoiQkVORUZJQ0lBUlkiLCJtb2JpbGVfbnVtYmVyIjo4OTcxMjYzNTY5LCJiZW5lZmljaWFyeV9yZWZlcmVuY2VfaWQiOjg2Mzc1NTU0MjcxOTEwLCJ1YSI6Ik1vemlsbGEvNS4wIChNYWNpbnRvc2g7IEludGVsIE1hYyBPUyBYIDEwXzE1XzcpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS85MS4wLjQ0NjkuMCBTYWZhcmkvNTM3LjM2IiwiZGF0ZV9tb2RpZmllZCI6IjIwMjEtMDUtMDJUMTQ6MTM6NTMuOTg4WiIsImlhdCI6MTYxOTk2NDgzMywiZXhwIjoxNjE5OTY1NzMzfQ.F6T8C04ITXOnh57f5dBXzeuQVpBoApiTRNuk5vw27E4",
+  "webhook": "",
+  "cowin": {
+    "search": "https://cdn-api.co-vin.in/api/v2/appointment/sessions/calendarByDistrict?district_id=395&date=03-05-2021",
+    "reschedule": "https://cdn-api.co-vin.in/api/v2/appointment/reschedule",
+    "schedule": "https://cdn-api.co-vin.in/api/v2/appointment/schedule"
+  },
+  "sleep": 5000,
+  "appointment_id": "",
+  "age": 25,
+  "phone": "9988776655",
+  "beneficiary_reference_id": "123123123123123",
+  "covaxin": false
+}
