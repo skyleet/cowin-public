@@ -40,8 +40,6 @@ function reschedule(slot, overrideCount = false) {
         return false;
       }
 
-      console.log(response);
-
       sendToSlack(response);
 
       return true;

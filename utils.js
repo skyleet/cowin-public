@@ -14,22 +14,26 @@ function getConfig() {
   return JSON.parse(json);
 }
 
-function sendToSlack(message) {
+function sendToSlack(message, ...otherParams) {
   const config = getConfig();
 
-  if (!config.webhook) {
-    return;
+  if (config.verbose || !config.webhook) {
+    console.log(message);
+    console.dir(otherParams);
   }
 
-  return fetch(config.webhook, {
-    body: JSON.stringify({
-      text: message,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-  });
+  if (config.webhook) {
+    return fetch(config.webhook, {
+      body: JSON.stringify({
+        text: message,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+  }
+  return;
 }
 
 function uniq(arr) {
