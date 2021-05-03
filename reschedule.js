@@ -59,7 +59,7 @@ function check() {
           let slot;
 
           if (config.covaxin) {
-            slot = slots[0];
+            slot = slotsForAge[0];
           } else {
             slot = slotsForAge.find(
               (slot) => !slot.vaccines.toLowerCase().includes('Covaxin')
