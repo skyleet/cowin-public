@@ -42,8 +42,6 @@ function schedule(slot, overrideCount = false) {
         return false;
       }
 
-      console.log(response);
-
       sendToSlack(response);
 
       return true;
@@ -54,32 +52,30 @@ function check() {
   return fetch(config.cowin.search)
     .then((res) => res.json())
     .then((response) => {
-      return schedule(response.centers[0], true).then(() => {
-        const slotsForAge = getSlotsForAge(response);
+      // Filter slots by age
+      const slotsForAge = getSlotsForAge(response);
+      // Log centers
+      sendToSlack('centers', slotsForAge);
+      if (slotsForAge.length) {
+        let slot;
 
-        if (slotsForAge.length) {
-          let slot;
-
-          if (config.covaxin) {
-            slot = slotsForAge[0];
-          } else {
-            slot = slotsForAge.find(
-              (slot) => !slot.vaccines.toLowerCase().includes('Covaxin')
-            );
-          }
-
-          if (!slot) {
-            return false;
-          }
-
-          return schedule(slot);
+        if (config.covaxin) {
+          slot = slotsForAge[0];
         } else {
+          slot = slotsForAge.find(
+            (slot) => !slot.vaccines.toLowerCase().includes('Covaxin')
+          );
+        }
+        if (!slot) {
           return false;
         }
-      });
+        // Make API call only if slot in center is available
+        return schedule(slot, true);
+      } else {
+        return false;
+      }
     })
     .catch((error) => {
-      console.error(error);
 
       sendToSlack('Script errored!', error);
 
