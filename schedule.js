@@ -45,39 +45,66 @@ function schedule(slot, overrideCount = false) {
       sendToSlack(response);
 
       return true;
+    })
+    .catch((error) => {
+
+      sendToSlack('Script errored while scheduling!', error);
+
+      return true;
     });
 }
 
 function check() {
   return fetch(config.cowin.search)
-    .then((res) => res.json())
-    .then((response) => {
-      // Filter slots by age
-      const slotsForAge = getSlotsForAge(response);
-      // Log centers
-      sendToSlack('centers', slotsForAge);
-      if (slotsForAge.length) {
-        let slot;
+    .then((res) => {
+      try {
+        if (res.status === 401) {
+          console.log('Time to reauthorize');
 
-        if (config.covaxin) {
-          slot = slotsForAge[0];
-        } else {
-          slot = slotsForAge.find(
-            (slot) => !slot.vaccines.toLowerCase().includes('Covaxin')
-          );
+          // Get new auth token
+          reauthorize();
+
+          return null;
         }
-        if (!slot) {
+        return res.json();
+      } catch(e) {
+        console.dir(res);
+        return null;;
+      }
+    })
+    .then((response) => {
+      try {
+        // Filter slots by age
+        const slotsForAge = getSlotsForAge(response);
+        // Log centers
+        sendToSlack('centers', slotsForAge);
+        if (slotsForAge.length) {
+          let slot;
+
+          if (config.covaxin) {
+            slot = slotsForAge[0];
+          } else {
+            slot = slotsForAge.find(
+              (slot) => !slot.vaccines.toLowerCase().includes('Covaxin')
+            );
+          }
+          if (!slot) {
+            return false;
+          }
+          // Make API call only if slot in center is available
+          return schedule(slot, true);
+        } else {
           return false;
         }
-        // Make API call only if slot in center is available
-        return schedule(slot, true);
-      } else {
-        return false;
+      } catch(e) {
+        console.log(e)
+        console.dir(response);
+        return null;;
       }
     })
     .catch((error) => {
 
-      sendToSlack('Script errored!', error);
+      sendToSlack('Script errored while checking slots!', error);
 
       return true;
     });
