@@ -74,22 +74,15 @@ function _fetch(url, opts = {}) {
 
   return fetch(url, {
     headers: {
-      accept: 'application/json, text/plain, */*',
-      'accept-language': 'en-US,en;q=0.9',
-      authorization: config.auth,
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Language': 'en-US,en;q=0.5',
+      'Authorization': config.auth,
       'cache-control': 'no-cache',
-      pragma: 'no-cache',
-      'sec-ch-ua':
-        '" Not A;Brand";v="99", "Chromium";v="90", "Google Chrome";v="90"',
-      'sec-ch-ua-mobile': '?0',
-      'sec-fetch-dest': 'empty',
-      'sec-fetch-mode': 'cors',
-      'sec-fetch-site': 'cross-site',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:89.0) Gecko/20100101 Firefox/89.0',
+      'Pragma': 'no-cache',
       ...headers,
     },
     referrer: 'https://selfregistration.cowin.gov.in/',
-    referrerPolicy: 'strict-origin-when-cross-origin',
-    body: null,
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
